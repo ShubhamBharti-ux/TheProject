@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Fresh Fields</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2ecc71;
+            --primary-dark: #27ae60;
+            --secondary: #3498db;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --gray: #95a5a6;
+            --danger: #e74c3c;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        /* Header Styles */
+        header {
+            background: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .btn-signin {
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-signin:hover {
+            color: var(--primary);
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            color: var(--dark);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .cart-icon:hover {
+            color: var(--primary);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/Background.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 2rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Filters and Search */
+        .filters-container {
+            background: white;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            max-width: 400px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
+        }
+
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Products Grid */
+        .products-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-category {
+            background: var(--light);
+            color: var(--dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+        }
+
+        .product-info h3 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .product-info p {
+            color: var(--gray);
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin: 0.8rem 0;
+        }
+
+        .rating {
+            color: #f1c40f;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            padding: 12px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray);
+            font-size: 1.2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            line-height: 1.8;
+            transition: var(--transition);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .page-subtitle {
+                font-size: 1rem;
+            }
+
+            .filters-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header {
+                height: 250px;
+            }
+
+            .page-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+    <a href="home.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit;">
+        <img src="images/Brandlogo.png" alt="Fresh Fields Logo">
+        Fresh<span>Fields</span>
+    </a>
+</div>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="product.html" class="active">Products</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="btn-signin" onclick="window.location.href='signin.html'">Sign In</button>
+                <div class="cart-icon" onclick="goToCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div>
+                <h1 class="page-title">Our Products</h1>
+                <p class="page-subtitle">Discover our wide selection of fresh, organic, and premium groceries</p>
+            </div>
+        </section>
+
+        <div class="filters-container">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Search products..." onkeyup="filterProducts()">
+            </div>
+            <div class="category-filters">
+                <button class="filter-btn active" onclick="filterByCategory('all')">All Products</button>
+                <button class="filter-btn" onclick="filterByCategory('organic-fruits')">Organic Fruits</button>
+                <button class="filter-btn" onclick="filterByCategory('organic-vegetables')">Organic Vegetables</button>
+                <button class="filter-btn" onclick="filterByCategory('fresh-meats')">Fresh Meats</button>
+                <button class="filter-btn" onclick="filterByCategory('organic-dairy')">Organic Dairy</button>
+                <button class="filter-btn" onclick="filterByCategory('alcohol')">Alcohol</button>
+                <button class="filter-btn" onclick="filterByCategory('flowers')">Flowers</button>
+                <button class="filter-btn" onclick="filterByCategory('imported-spices')">Imported Spices</button>
+                <button class="filter-btn" onclick="filterByCategory('gym-supplements')">Gym Supplements</button>
+                <button class="filter-btn" onclick="filterByCategory('personal-care')">Personal Care</button>
+                <button class="filter-btn" onclick="filterByCategory('cosmetic-products')">Cosmetic Products</button>
+                <button class="filter-btn" onclick="filterByCategory('baby-child')">Baby & Child</button>
+                <button class="filter-btn" onclick="filterByCategory('pet-care')">Pet Care</button>
+            </div>
+        </div>
+
+        <div class="products-container" id="products-container">
+            <!-- Products will be loaded here by JavaScript -->
+        </div>
+
+        <div class="no-products" id="no-products" style="display: none;">
+            <p>No products found matching your search criteria.</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Fresh Fields</h3>
+                    <p>We're committed to bringing you the freshest, highest quality groceries at affordable prices.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="home.html">Home</a>
+                    <a href="product.html">Products</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="about.html">About</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Categories</h3>
+                    <a href="product.html?category=organic-fruits">Organic Fruits</a>
+                    <a href="product.html?category=organic-vegetables">Organic Vegetables</a>
+                    <a href="product.html?category=fresh-meats">Fresh Meats</a>
+                    <a href="product.html?category=organic-dairy">Organic Dairy</a>
+                    <a href="product.html?category=alcohol">Alcohol</a>
+                    <a href="product.html?category=flowers">Flowers</a>
+                    <a href="product.html?category=imported-spices">Imported Spices</a>
+                    <a href="product.html?category=gym-supplements">Gym Supplements</a>
+                    <a href="product.html?category=personal-care">Personal Care</a>
+                    <a href="product.html?category=cosmetic-products">Cosmetic Products</a>
+                    <a href="product.html?category=baby-child">Baby & Child</a>
+                    <a href="product.html?category=pet-care">Pet Care</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-envelope"></i> info@freshfields.com</p>
+                    <p><i class="fas fa-phone"></i> (437) 871-1007</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 20 Columbia St W, Waterloo, Ontario, N2L 3K3</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Fresh Fields. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+     <script>
+        // Complete product catalog with all categories (10 products per category)
+        const allProducts = [
+            // Organic Fruits (10 products)
+            {
+                id: 1,
+                name: "Organic Apples",
+                price: 4.99,
+                category: "organic-fruits",
+                image: "images/products/organic-apples.jpg",
+                description: "Fresh organic apples from local farms. Sweet and crispy.",
+                rating: "★★★★★"
+            },
+            {
+                id: 2,
+                name: "Organic Bananas",
+                price: 2.99,
+                category: "organic-fruits",
+                image: "images/products/organic-bananas.jpg",
+                description: "Ripe organic bananas perfect for snacking or smoothies.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 3,
+                name: "Organic Strawberries",
+                price: 5.99,
+                category: "organic-fruits",
+                image: "images/products/organic-strawberries.jpg",
+                description: "Sweet, juicy organic strawberries bursting with flavor.",
+                rating: "★★★★★"
+            },
+            {
+                id: 4,
+                name: "Organic Blueberries",
+                price: 6.49,
+                category: "organic-fruits",
+                image: "images/products/organic-blueberries.jpg",
+                description: "Antioxidant-rich organic blueberries.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 5,
+                name: "Organic Grapes",
+                price: 4.49,
+                category: "organic-fruits",
+                image: "images/products/organic-grapes.jpg",
+                description: "Sweet seedless organic grapes.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 6,
+                name: "Organic Oranges",
+                price: 3.99,
+                category: "organic-fruits",
+                image: "images/products/organic-oranges.jpg",
+                description: "Juicy organic oranges packed with vitamin C.",
+                rating: "★★★★★"
+            },
+            {
+                id: 7,
+                name: "Organic Pineapple",
+                price: 5.99,
+                category: "organic-fruits",
+                image: "images/products/organic-pineapple.jpg",
+                description: "Sweet tropical organic pineapple.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 8,
+                name: "Organic Mangoes",
+                price: 4.99,
+                category: "organic-fruits",
+                image: "images/products/organic-mangoes.jpg",
+                description: "Sweet and juicy organic mangoes.",
+                rating: "★★★★★"
+            },
+            {
+                id: 9,
+                name: "Organic Pears",
+                price: 3.99,
+                category: "organic-fruits",
+                image: "images/products/organic-pears.jpg",
+                description: "Delicate and sweet organic pears.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 10,
+                name: "Organic Kiwi",
+                price: 4.49,
+                category: "organic-fruits",
+                image: "images/products/organic-kiwi.jpg",
+                description: "Tart and sweet organic kiwi fruit.",
+                rating: "★★★★☆"
+            },
+            
+            // Organic Vegetables (10 products)
+            {
+                id: 11,
+                name: "Organic Spinach",
+                price: 3.49,
+                category: "organic-vegetables",
+                image: "images/products/organic-spinach.jpg",
+                description: "Nutrient-rich organic spinach leaves perfect for salads.",
+                rating: "★★★★★"
+            },
+            {
+                id: 12,
+                name: "Organic Carrots",
+                price: 2.99,
+                category: "organic-vegetables",
+                image: "images/products/organic-carrots.jpg",
+                description: "Sweet, crunchy organic carrots grown locally.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 13,
+                name: "Organic Bell Peppers",
+                price: 4.99,
+                category: "organic-vegetables",
+                image: "images/products/organic-bell-peppers.jpg",
+                description: "Colorful mix of organic bell peppers.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 14,
+                name: "Organic Broccoli",
+                price: 3.99,
+                category: "organic-vegetables",
+                image: "images/products/organic-broccoli.jpg",
+                description: "Fresh organic broccoli packed with nutrients.",
+                rating: "★★★★★"
+            },
+            {
+                id: 15,
+                name: "Organic Tomatoes",
+                price: 4.49,
+                category: "organic-vegetables",
+                image: "images/products/organic-tomatoes.jpg",
+                description: "Juicy vine-ripened organic tomatoes.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 16,
+                name: "Organic Cucumbers",
+                price: 2.49,
+                category: "organic-vegetables",
+                image: "images/products/organic-cucumbers.jpg",
+                description: "Crisp organic cucumbers perfect for salads.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 17,
+                name: "Organic Kale",
+                price: 3.99,
+                category: "organic-vegetables",
+                image: "images/products/organic-kale.jpg",
+                description: "Nutrient-dense organic kale leaves.",
+                rating: "★★★★★"
+            },
+            {
+                id: 18,
+                name: "Organic Zucchini",
+                price: 2.99,
+                category: "organic-vegetables",
+                image: "images/products/organic-zucchini.jpg",
+                description: "Fresh organic zucchini for versatile cooking.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 19,
+                name: "Organic Sweet Potatoes",
+                price: 3.49,
+                category: "organic-vegetables",
+                image: "images/products/organic-sweet-potatoes.jpg",
+                description: "Naturally sweet organic sweet potatoes.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 20,
+                name: "Organic Mushrooms",
+                price: 4.99,
+                category: "organic-vegetables",
+                image: "images/products/organic-mushrooms.jpg",
+                description: "Fresh organic mushrooms for cooking.",
+                rating: "★★★★★"
+            },
+            
+            // Fresh Meats (10 products)
+            {
+                id: 21,
+                name: "Grass-fed Beef Steak",
+                price: 14.99,
+                category: "fresh-meats",
+                image: "images/products/grass-fed-beef.jpg",
+                description: "Premium grass-fed beef steaks, hormone-free.",
+                rating: "★★★★★"
+            },
+            {
+                id: 22,
+                name: "Free-range Chicken",
+                price: 9.99,
+                category: "fresh-meats",
+                image: "images/products/free-range-chicken.jpg",
+                description: "Fresh free-range chicken breast.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 23,
+                name: "Organic Ground Turkey",
+                price: 8.99,
+                category: "fresh-meats",
+                image: "images/products/organic-turkey.jpg",
+                description: "Lean organic ground turkey for healthy meals.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 24,
+                name: "Pasture-raised Pork Chops",
+                price: 11.99,
+                category: "fresh-meats",
+                image: "images/products/pork-chops.jpg",
+                description: "Juicy pasture-raised pork chops.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 25,
+                name: "Grass-fed Ground Beef",
+                price: 10.99,
+                category: "fresh-meats",
+                image: "images/products/ground-beef.jpg",
+                description: "Lean grass-fed ground beef.",
+                rating: "★★★★★"
+            },
+            {
+                id: 26,
+                name: "Free-range Chicken Thighs",
+                price: 7.99,
+                category: "fresh-meats",
+                image: "images/products/chicken-thighs.jpg",
+                description: "Flavorful free-range chicken thighs.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 27,
+                name: "Organic Lamb Chops",
+                price: 18.99,
+                category: "fresh-meats",
+                image: "images/products/lamb-chops.jpg",
+                description: "Tender organic lamb chops.",
+                rating: "★★★★★"
+            },
+            {
+                id: 28,
+                name: "Grass-fed Beef Ribs",
+                price: 12.99,
+                category: "fresh-meats",
+                image: "images/products/beef-ribs.jpg",
+                description: "Flavorful grass-fed beef ribs.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 29,
+                name: "Organic Chicken Wings",
+                price: 8.49,
+                category: "fresh-meats",
+                image: "images/products/chicken-wings.jpg",
+                description: "Juicy organic chicken wings.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 30,
+                name: "Grass-fed Beef Roast",
+                price: 15.99,
+                category: "fresh-meats",
+                image: "images/products/beef-roast.jpg",
+                description: "Premium grass-fed beef roast.",
+                rating: "★★★★★"
+            },
+            
+            // Organic Dairy (10 products)
+            {
+                id: 31,
+                name: "Organic Whole Milk",
+                price: 4.99,
+                category: "organic-dairy",
+                image: "images/products/organic-milk.jpg",
+                description: "Fresh organic whole milk from grass-fed cows.",
+                rating: "★★★★★"
+            },
+            {
+                id: 32,
+                name: "Organic Greek Yogurt",
+                price: 5.49,
+                category: "organic-dairy",
+                image: "images/products/organic-yogurt.jpg",
+                description: "Creamy organic Greek yogurt packed with protein.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 33,
+                name: "Organic Cheddar Cheese",
+                price: 8.99,
+                category: "organic-dairy",
+                image: "images/products/organic-cheese.jpg",
+                description: "Artisan organic cheese with rich flavor.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 34,
+                name: "Organic Butter",
+                price: 6.99,
+                category: "organic-dairy",
+                image: "images/products/organic-butter.jpg",
+                description: "Creamy organic butter from grass-fed cows.",
+                rating: "★★★★★"
+            },
+            {
+                id: 35,
+                name: "Organic Eggs (Dozen)",
+                price: 7.99,
+                category: "organic-dairy",
+                image: "images/products/organic-eggs.jpg",
+                description: "Free-range organic eggs from happy hens.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 36,
+                name: "Organic Sour Cream",
+                price: 3.99,
+                category: "organic-dairy",
+                image: "images/products/organic-sour-cream.jpg",
+                description: "Rich and tangy organic sour cream.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 37,
+                name: "Organic Cream Cheese",
+                price: 4.99,
+                category: "organic-dairy",
+                image: "images/products/organic-cream-cheese.jpg",
+                description: "Smooth organic cream cheese.",
+                rating: "★★★★★"
+            },
+            {
+                id: 38,
+                name: "Organic Mozzarella",
+                price: 7.49,
+                category: "organic-dairy",
+                image: "images/products/organic-mozzarella.jpg",
+                description: "Fresh organic mozzarella cheese.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 39,
+                name: "Organic Almond Milk",
+                price: 5.99,
+                category: "organic-dairy",
+                image: "images/products/organic-almond-milk.jpg",
+                description: "Creamy organic almond milk alternative.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 40,
+                name: "Organic Cottage Cheese",
+                price: 4.49,
+                category: "organic-dairy",
+                image: "images/products/organic-cottage-cheese.jpg",
+                description: "Protein-rich organic cottage cheese.",
+                rating: "★★★★☆"
+            },
+            
+            // Alcohol (10 products)
+            {
+                id: 41,
+                name: "Park Sesh Lager Craft Beer 6-Pack",
+                price: 14.99,
+                category: "alcohol",
+                image: "images/products/craft-beer.jpg",
+                description: "Local craft beer selection with unique flavors.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 42,
+                name: "Royal Red Wine",
+                price: 19.99,
+                category: "alcohol",
+                image: "images/products/red-wine.jpg",
+                description: "Award-winning organic red wine.",
+                rating: "★★★★★"
+            },
+            {
+                id: 43,
+                name: "Smirnoff Lime Flavoured Vodka",
+                price: 24.99,
+                category: "alcohol",
+                image: "images/products/vodka.jpg",
+                description: "Premium imported vodka, triple distilled.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 44,
+                name: "Jack Daniel's Tennessee Whisky",
+                price: 29.99,
+                category: "alcohol",
+                image: "images/products/whiskey.jpg",
+                description: "Aged single malt whiskey.",
+                rating: "★★★★★"
+            },
+            {
+                id: 45,
+                name: "Réserve Riesling White Wine",
+                price: 16.99,
+                category: "alcohol",
+                image: "images/products/white-wine.jpg",
+                description: "Crisp organic white wine.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 46,
+                name: "Beefeater London Dry Gin",
+                price: 22.99,
+                category: "alcohol",
+                image: "images/products/gin.jpg",
+                description: "Premium craft gin with botanicals.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 47,
+                name: "Captain Morgan Spiced Rum",
+                price: 19.99,
+                category: "alcohol",
+                image: "images/products/rum.jpg",
+                description: "Aged Caribbean rum.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 48,
+                name: "Tequila Reposado Teremana",
+                price: 27.99,
+                category: "alcohol",
+                image: "images/products/tequila.jpg",
+                description: "Premium 100% agave tequila.",
+                rating: "★★★★★"
+            },
+            {
+                id: 49,
+                name: "Roscato Sparkling Sweet Red",
+                price: 21.99,
+                category: "alcohol",
+                image: "images/products/sparkling-wine.jpg",
+                description: "Organic sparkling wine for celebrations.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 50,
+                name: "Maline Deuxieme Cuvee Cider",
+                price: 8.99,
+                category: "alcohol",
+                image: "images/products/cider.jpg",
+                description: "Crisp organic apple cider.",
+                rating: "★★★★☆"
+            },
+            
+            // Flowers (10 products)
+            {
+                id: 51,
+                name: "Fresh Roses Bouquet",
+                price: 19.99,
+                category: "flowers",
+                image: "images/products/roses-bouquet.jpg",
+                description: "Dozen fresh cut roses in various colors.",
+                rating: "★★★★★"
+            },
+            {
+                id: 52,
+                name: "Tulip Arrangement",
+                price: 15.99,
+                category: "flowers",
+                image: "images/products/tulips.jpg",
+                description: "Beautiful tulip arrangement perfect for gifts.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 53,
+                name: "Sunflower Bouquet",
+                price: 17.99,
+                category: "flowers",
+                image: "images/products/sunflowers.jpg",
+                description: "Cheerful sunflower bouquet.",
+                rating: "★★★★★"
+            },
+            {
+                id: 54,
+                name: "Mixed Flower Basket",
+                price: 24.99,
+                category: "flowers",
+                image: "images/products/mixed-flowers.jpg",
+                description: "Seasonal mixed flower basket.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 55,
+                name: "Orchid Plant",
+                price: 29.99,
+                category: "flowers",
+                image: "images/products/orchid.jpg",
+                description: "Elegant live orchid plant.",
+                rating: "★★★★★"
+            },
+            {
+                id: 56,
+                name: "Lily Bouquet",
+                price: 21.99,
+                category: "flowers",
+                image: "images/products/lilies.jpg",
+                description: "Fragrant lily bouquet.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 57,
+                name: "Daisy Arrangement",
+                price: 14.99,
+                category: "flowers",
+                image: "images/products/daisies.jpg",
+                description: "Cheerful daisy flower arrangement.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 58,
+                name: "Carnation Bouquet",
+                price: 12.99,
+                category: "flowers",
+                image: "images/products/carnations.jpg",
+                description: "Long-lasting carnation bouquet.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 59,
+                name: "Succulent Garden",
+                price: 22.99,
+                category: "flowers",
+                image: "images/products/succulents.jpg",
+                description: "Low-maintenance succulent garden.",
+                rating: "★★★★★"
+            },
+            {
+                id: 60,
+                name: "Peony Bouquet",
+                price: 27.99,
+                category: "flowers",
+                image: "images/products/peonies.jpg",
+                description: "Luxurious peony bouquet.",
+                rating: "★★★★★"
+            },
+            
+            // Imported Spices (10 products)
+            {
+                id: 61,
+                name: "Saffron",
+                price: 29.99,
+                category: "imported-spices",
+                image: "images/products/saffron.jpg",
+                description: "Premium imported saffron threads.",
+                rating: "★★★★★"
+            },
+            {
+                id: 62,
+                name: "Truffle Salt",
+                price: 12.99,
+                category: "imported-spices",
+                image: "images/products/truffle-salt.png",
+                description: "Italian black truffle sea salt.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 63,
+                name: "Vanilla Beans",
+                price: 14.99,
+                category: "imported-spices",
+                image: "images/products/vanilla-beans.jpg",
+                description: "Madagascar vanilla beans.",
+                rating: "★★★★★"
+            },
+            {
+                id: 64,
+                name: "Ceylon Cinnamon",
+                price: 8.99,
+                category: "imported-spices",
+                image: "images/products/cinnamon.jpg",
+                description: "True Ceylon cinnamon sticks.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 65,
+                name: "Sumac",
+                price: 7.99,
+                category: "imported-spices",
+                image: "images/products/sumac.jpg",
+                description: "Middle Eastern sumac spice.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 66,
+                name: "Cardamom Pods",
+                price: 9.99,
+                category: "imported-spices",
+                image: "images/products/cardamom.jpg",
+                description: "Green cardamom pods from India.",
+                rating: "★★★★★"
+            },
+            {
+                id: 67,
+                name: "Star Anise",
+                price: 6.99,
+                category: "imported-spices",
+                image: "images/products/star-anise.jpg",
+                description: "Whole star anise pods.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 68,
+                name: "Smoked Paprika",
+                price: 7.49,
+                category: "imported-spices",
+                image: "images/products/paprika.jpg",
+                description: "Spanish smoked paprika.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 69,
+                name: "Za'atar Blend",
+                price: 8.99,
+                category: "imported-spices",
+                image: "images/products/zaatar.jpg",
+                description: "Authentic Middle Eastern za'atar.",
+                rating: "★★★★★"
+            },
+            {
+                id: 70,
+                name: "Japanese Matcha",
+                price: 19.99,
+                category: "imported-spices",
+                image: "images/products/matcha.jpg",
+                description: "Premium ceremonial grade matcha.",
+                rating: "★★★★★"
+            },
+            
+            // Gym Supplements (10 products)
+            {
+                id: 71,
+                name: "Ultimate Nutrition Prostar 100% Whey Protein",
+                price: 24.99,
+                category: "gym-supplements",
+                image: "images/products/whey-protein.jpg",
+                description: "Premium whey protein isolate.",
+                rating: "★★★★★"
+            },
+            {
+                id: 72,
+                name: "Optimum Nutrition Instantized BCAA",
+                price: 19.99,
+                category: "gym-supplements",
+                image: "images/products/bcaa.jpg",
+                description: "Branch chain amino acids for recovery.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 73,
+                name: "Cellucor C4 Ripped Preworkout",
+                price: 29.99,
+                category: "gym-supplements",
+                image: "images/products/pre-workout.jpg",
+                description: "Energy-boosting pre-workout formula.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 74,
+                name: "Platinum 100% Creatine Monohydrate",
+                price: 17.99,
+                category: "gym-supplements",
+                image: "images/products/creatine.jpg",
+                description: "Pure creatine for muscle performance.",
+                rating: "★★★★★"
+            },
+            {
+                id: 75,
+                name: "MusclePharm Combatxl 5.44 kg",
+                price: 34.99,
+                category: "gym-supplements",
+                image: "images/products/mass-gainer.jpg",
+                description: "High-calorie mass building formula.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 76,
+                name: "OPTIMUM NUTRITION Gold Standard 100% Casein",
+                price: 27.99,
+                category: "gym-supplements",
+                image: "images/products/casein.jpg",
+                description: "Slow-digesting nighttime protein.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 77,
+                name: "Platinum 100% Glutamine",
+                price: 18.99,
+                category: "gym-supplements",
+                image: "images/products/glutamine.jpg",
+                description: "Muscle recovery glutamine supplement.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 78,
+                name: "PURE NUTRITION SUPER FAT BURNER",
+                price: 22.99,
+                category: "gym-supplements",
+                image: "images/products/fat-burner.jpg",
+                description: "Thermogenic fat burning complex.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 79,
+                name: "Nuun Sport - Watermelon Electrolyte Tablets",
+                price: 12.99,
+                category: "gym-supplements",
+                image: "images/products/electrolytes.jpg",
+                description: "Hydration electrolyte replacement.",
+                rating: "★★★★★"
+            },
+            {
+                id: 80,
+                name: "Great Lakes Wellness Collagen Peptides Powder",
+                price: 21.99,
+                category: "gym-supplements",
+                image: "images/products/collagen.jpg",
+                description: "Joint and skin support collagen.",
+                rating: "★★★★★"
+            },
+            
+            // Personal Care (10 products)
+            {
+                id: 81,
+                name: "Rose Farmcrafted Soap",
+                price: 6.99,
+                category: "personal-care",
+                image: "images/products/organic-soap.jpg",
+                description: "Natural organic soap with essential oils.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 82,
+                name: "Bamboo Charcoal Soft Toothbrush",
+                price: 4.99,
+                category: "personal-care",
+                image: "images/products/bamboo-toothbrush.jpg",
+                description: "Eco-friendly bamboo toothbrush.",
+                rating: "★★★★★"
+            },
+            {
+                id: 83,
+                name: "Nivea Men Protect & Care 48h Deodorant",
+                price: 8.99,
+                category: "personal-care",
+                image: "images/products/deodorant.jpg",
+                description: "Aluminum-free natural deodorant.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 84,
+                name: "Shampoo Bar – Om Naturale Herbal Care",
+                price: 9.99,
+                category: "personal-care",
+                image: "images/products/shampoo-bar.jpg",
+                description: "Plastic-free shampoo bar.",
+                rating: "★★★★★"
+            },
+            {
+                id: 85,
+                name: "Dove Daily Moisture Hydration Conditioner",
+                price: 9.99,
+                category: "personal-care",
+                image: "images/products/conditioner-bar.jpg",
+                description: "Solid conditioner for all hair types.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 86,
+                name: "Nivea, Essentially Enriched Body Lotion,",
+                price: 12.99,
+                category: "personal-care",
+                image: "images/products/body-lotion.jpg",
+                description: "Moisturizing organic body lotion.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 87,
+                name: "Studio OH! Lip Balm & Lotion Set",
+                price: 7.99,
+                category: "personal-care",
+                image: "images/products/lip-balm.jpg",
+                description: "Natural lip balm in various flavors.",
+                rating: "★★★★★"
+            },
+            {
+                id: 88,
+                name: "Gillette Double Edge Safety Razor",
+                price: 24.99,
+                category: "personal-care",
+                image: "images/products/safety-razor.jpg",
+                description: "Zero-waste metal safety razor.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 89,
+                name: "Moroccanoil: Dry Shampoo Dark Tones",
+                price: 10.99,
+                category: "personal-care",
+                image: "images/products/dry-shampoo.jpg",
+                description: "Natural powder dry shampoo.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 90,
+                name: "Purell® Advanced Hand Sanitizer Gel",
+                price: 5.99,
+                category: "personal-care",
+                image: "images/products/hand-sanitizer.jpg",
+                description: "Alcohol-based hand sanitizer gel.",
+                rating: "★★★★★"
+            },
+            
+            // Cosmetic Products (10 products)
+            {
+                id: 91,
+                name: "Birch Babe Hydrating Face Cream",
+                price: 29.99,
+                category: "cosmetic-products",
+                image: "images/products/face-cream.jpg",
+                description: "Anti-aging organic face cream.",
+                rating: "★★★★★"
+            },
+            {
+                id: 92,
+                name: "Matte & Satin Lip Color Lipstick",
+                price: 14.99,
+                category: "cosmetic-products",
+                image: "images/products/lipstick.jpg",
+                description: "Vegan natural lipstick in various shades.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 93,
+                name: "Jane Iredale Amazing Base Loose Mineral Powder",
+                price: 24.99,
+                category: "cosmetic-products",
+                image: "images/products/foundation.jpg",
+                description: "Natural mineral powder foundation.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 94,
+                name: "Clinique Lash Power Long Wearing Mascara Black Onyx",
+                price: 16.99,
+                category: "cosmetic-products",
+                image: "images/products/mascara.jpg",
+                description: "Natural lengthening mascara.",
+                rating: "★★★★★"
+            },
+            {
+                id: 95,
+                name: "Ultimate Utopia Shadow Palette",
+                price: 22.99,
+                category: "cosmetic-products",
+                image: "images/products/eyeshadow.jpg",
+                description: "Neutral eye shadow palette.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 96,
+                name: "NYX Pro Makeup Pro Fix Stick Correcting Concealer 09 Neutral Tan ",
+                price: 18.99,
+                category: "cosmetic-products",
+                image: "images/products/concealer.jpg",
+                description: "Creamy natural concealer.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 97,
+                name: "Garnier Skin Active Eye Makeup Remover",
+                price: 12.99,
+                category: "cosmetic-products",
+                image: "images/products/makeup-remover.jpg",
+                description: "Gentle oil-based makeup remover.",
+                rating: "★★★★★"
+            },
+            {
+                id: 98,
+                name: "It Cosmetics Glow With Confidence Blush 30-Medium Tan 18g",
+                price: 15.99,
+                category: "cosmetic-products",
+                image: "images/products/blush.jpg",
+                description: "Natural cream blush.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 99,
+                name: "Makeup Revolution Highlighter Reloaded Dare To Divulge | CDON",
+                price: 19.99,
+                category: "cosmetic-products",
+                image: "images/products/highlighter.jpg",
+                description: "Luminous natural highlighter.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 100,
+                name: "AIRBRUSH FLAWLESS SETTING SPRAY - ORIGINAL 100 ML",
+                price: 17.99,
+                category: "cosmetic-products",
+                image: "images/products/setting-spray.jpg",
+                description: "Makeup setting spray with aloe.",
+                rating: "★★★★★"
+            },
+            
+            // Baby & Child (10 products)
+            {
+                id: 101,
+                name: "Gerber Organic Mango Apple Pear Puree Baby Food Pouch (128 ml)",
+                price: 3.99,
+                category: "baby-child",
+                image: "images/products/baby-food.jpg",
+                description: "Organic pureed baby food in various flavors.",
+                rating: "★★★★★"
+            },
+            {
+                id: 102,
+                name: "Baby Shampoo & Body Wash – Vita Health Fresh Market",
+                price: 8.99,
+                category: "baby-child",
+                image: "images/products/baby-shampoo.jpg",
+                description: "Tear-free organic baby shampoo.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 103,
+                name: "Hi Baby - Diapers Assorted Sizes - 100's - The Happy Nappy",
+                price: 14.99,
+                category: "baby-child",
+                image: "images/products/diapers.jpg",
+                description: "Hypoallergenic organic diapers.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 104,
+                name: "Original Baby Wipes - 60 Pack | Snuggle Bugz",
+                price: 5.99,
+                category: "baby-child",
+                image: "images/products/baby-wipes.jpg",
+                description: "Gentle organic baby wipes.",
+                rating: "★★★★★"
+            },
+            {
+                id: 105,
+                name: "Johnson's Baby Lotion ",
+                price: 9.99,
+                category: "baby-child",
+                image: "images/products/baby-lotion.jpg",
+                description: "Moisturizing organic baby lotion.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 106,
+                name: "Comotomo Silicone Baby Bottles",
+                price: 12.99,
+                category: "baby-child",
+                image: "images/products/baby-bottles.jpg",
+                description: "BPA-free baby bottles.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 107,
+                name: "Nature Teething Ring",
+                price: 7.99,
+                category: "baby-child",
+                image: "images/products/teething-toys.jpg",
+                description: "Natural rubber teething toys.",
+                rating: "★★★★★"
+            },
+            {
+                id: 108,
+                name: "3 Piece onesies , Desert Set",
+                price: 11.99,
+                category: "baby-child",
+                image: "images/products/onesies.jpg",
+                description: "Soft organic cotton onesies.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 109,
+                name: "Effe Bebe Newborn Infant Graphic Solid",
+                price: 19.99,
+                category: "baby-child",
+                image: "images/products/baby-blanket.jpg",
+                description: "Organic cotton baby blanket.",
+                rating: "★★★★★"
+            },
+            {
+                id: 110,
+                name: "Baby Carriers - Gear - Activity & Gear",
+                price: 49.99,
+                category: "baby-child",
+                image: "images/products/baby-carrier.jpg",
+                description: "Ergonomic organic baby carrier.",
+                rating: "★★★★☆"
+            },
+            
+            // Pet Care (10 products)
+            {
+                id: 111,
+                name: "Only Natural Pet Raw Blends Digestive Care Dog Food ",
+                price: 12.99,
+                category: "pet-care",
+                image: "images/products/dog-food.jpg",
+                description: "Grain-free organic dog food.",
+                rating: "★★★★★"
+            },
+            {
+                id: 112,
+                name: "Catit Creamy Chicken & Liver Cat Treats",
+                price: 5.99,
+                category: "pet-care",
+                image: "images/products/cat-treats.jpg",
+                description: "Natural cat treats with salmon.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 113,
+                name: "WEST PAW - Tux Tough Treat Dispensing Dog Chew Toy",
+                price: 8.99,
+                category: "pet-care",
+                image: "images/products/dog-toys.jpg",
+                description: "Durable natural rubber chew toys.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 114,
+                name: "Selection Unscented Clumping Cat Litter",
+                price: 14.99,
+                category: "pet-care",
+                image: "images/products/cat-litter.jpg",
+                description: "Natural biodegradable cat litter.",
+                rating: "★★★★★"
+            },
+            {
+                id: 115,
+                name: "Purodora Purodora Pet Shampoo for Curly Coats 500ml",
+                price: 9.99,
+                category: "pet-care",
+                image: "images/products/pet-shampoo.jpg",
+                description: "Gentle organic pet shampoo.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 116,
+                name: "UTSÅDD Dog Bed, Light Gray",
+                price: 39.99,
+                category: "pet-care",
+                image: "images/products/dog-bed.jpg",
+                description: "Orthopedic organic dog bed.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 117,
+                name: "Whisker City® 19-in Carpet Scratching Post",
+                price: 24.99,
+                category: "pet-care",
+                image: "images/products/cat-post.jpg",
+                description: "Natural sisal scratching post.",
+                rating: "★★★★★"
+            },
+            {
+                id: 118,
+                name: "Paw Brothers Professional Grade Extra Long Slicker Brush ",
+                price: 12.99,
+                category: "pet-care",
+                image: "images/products/pet-brush.jpg",
+                description: "Gentle grooming brush for pets.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 119,
+                name: "Tetra GOLDFISH FLAKES 4.52 LB",
+                price: 6.99,
+                category: "pet-care",
+                image: "images/products/fish-food.jpg",
+                description: "Natural tropical fish flakes.",
+                rating: "★★★★☆"
+            },
+            {
+                id: 120,
+                name: "Kingsyard Squirrel Proof Bird Feeder for Outdoors",
+                price: 15.99,
+                category: "pet-care",
+                image: "images/products/bird-feeder.jpg",
+                description: "Eco-friendly wooden bird feeder.",
+                rating: "★★★★★"
+            }
+            ];
+
+        let currentProducts = [...allProducts];
+        let currentCategory = 'all';
+
+        // Load cart count from localStorage
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+        }
+
+        // Add product to cart
+        function addToCart(product) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingItem = cart.find(item => item.id === product.id);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+
+            // Show success message
+            alert(`${product.name} added to cart!`);
+        }
+
+        // Navigate to cart
+        function goToCart() {
+            window.location.href = 'cart.html';
+        }
+
+        // Filter products by category
+        function filterByCategory(category) {
+            currentCategory = category;
+
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Filter products
+            if (category === 'all') {
+                currentProducts = [...allProducts];
+            } else {
+                currentProducts = allProducts.filter(product => product.category === category);
+            }
+
+            // Apply search filter if there's a search term
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            if (searchTerm) {
+                currentProducts = currentProducts.filter(product =>
+                    product.name.toLowerCase().includes(searchTerm) ||
+                    product.description.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            renderProducts();
+        }
+
+        // Filter products by search term
+        function filterProducts() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+
+            // Start with category filter
+            let filteredProducts;
+            if (currentCategory === 'all') {
+                filteredProducts = [...allProducts];
+            } else {
+                filteredProducts = allProducts.filter(product => product.category === currentCategory);
+            }
+
+            // Apply search filter
+            if (searchTerm) {
+                filteredProducts = filteredProducts.filter(product =>
+                    product.name.toLowerCase().includes(searchTerm) ||
+                    product.description.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            currentProducts = filteredProducts;
+            renderProducts();
+        }
+
+        // Render products
+        function renderProducts() {
+            const container = document.getElementById('products-container');
+            const noProductsMsg = document.getElementById('no-products');
+
+            if (currentProducts.length === 0) {
+                container.style.display = 'none';
+                noProductsMsg.style.display = 'block';
+                return;
+            }
+
+            container.style.display = 'grid';
+            noProductsMsg.style.display = 'none';
+            container.innerHTML = '';
+
+            currentProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="product-info">
+                        <span class="product-category">${formatCategoryName(product.category)}</span>
+                        ${product.rating ? `<div class="rating">${product.rating}</div>` : ''}
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <div class="product-price">$${product.price.toFixed(2)}</div>
+                        <button class="btn" onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})">
+                            Add to Cart
+                        </button>
+                    </div>
+                `;
+                container.appendChild(productCard);
+            });
+        }
+
+        // Format category name for display
+        function formatCategoryName(category) {
+            return category.split('-').map(word => 
+                word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ');
+        }
+
+        // Check for category parameter in URL
+        function checkUrlParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get('category');
+
+            if (category) {
+                // Find and click the corresponding filter button
+                const filterButtons = document.querySelectorAll('.filter-btn');
+                filterButtons.forEach(btn => {
+                    if (btn.textContent.toLowerCase().includes(category.toLowerCase())) {
+                        btn.click();
+                    }
+                });
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            renderProducts();
+            checkUrlParams();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Fields - Style Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2ecc71;
+            --primary-dark: #27ae60;
+            --secondary: #3498db;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --gray: #95a5a6;
+            --danger: #e74c3c;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.15);
+            --transition: all 300ms ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 24px;
+            color: var(--dark);
+            background-color: #f9f9f9;
+            padding: 32px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Logo Styles */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 32px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        h1, h2, h3, h4 {
+            margin-bottom: 16px;
+            color: var(--dark);
+        }
+
+        h1 {
+            font-size: 40px;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 8px;
+            margin-bottom: 32px;
+        }
+
+        h2 {
+            font-size: 32px;
+            margin-top: 48px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        h3 {
+            font-size: 24px;
+            margin-top: 32px;
+            color: var(--primary-dark);
+        }
+
+        p {
+            margin-bottom: 16px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 8px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 32px;
+            margin: 32px 0;
+        }
+
+        .color-swatch {
+            height: 100px;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-end;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            box-shadow: var(--shadow);
+        }
+
+        .color-swatch.light {
+            color: var(--dark);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            margin-right: 16px;
+            margin-bottom: 16px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(46, 204, 113, 0.1);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-img {
+            height: 150px;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        .card-body h4 {
+            margin-bottom: 8px;
+        }
+
+        .card-body p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .typography-example {
+            margin: 24px 0;
+            padding: 16px;
+            background: var(--light);
+            border-radius: 8px;
+        }
+
+        .nav-example {
+            display: flex;
+            gap: 24px;
+            margin: 16px 0;
+        }
+
+        .nav-example a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-example a:hover {
+            color: var(--primary);
+        }
+
+        .nav-example a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-example a:hover::after {
+            width: 100%;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .badge-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .badge-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .rating {
+            color: #f1c40f;
+            margin: 8px 0;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Logo added here -->
+        <div class="logo">
+            <img src="images/Brandlogo.png" alt="Fresh Fields Logo">
+            Fresh<span>Fields</span>
+        </div>
+        
+        <h1>Fresh Fields Style Guide</h1>
+        
+        <!-- Colors Section -->
+        <section class="section">
+            <h2>Colors</h2>
+            <div class="grid">
+                <div>
+                    <div class="color-swatch" style="background-color: var(--primary);">
+                        Primary Green<br>#2ecc71
+                    </div>
+                    <p>Used for buttons, accents, highlights</p>
+                </div>
+                <div>
+                    <div class="color-swatch" style="background-color: var(--primary-dark);">
+                        Primary Dark<br>#27ae60
+                    </div>
+                    <p>Hover states</p>
+                </div>
+                <div>
+                    <div class="color-swatch" style="background-color: var(--secondary);">
+                        Secondary Blue<br>#3498db
+                    </div>
+                    <p>Secondary actions, information</p>
+                </div>
+                <div>
+                    <div class="color-swatch" style="background-color: var(--dark);">
+                        Dark<br>#2c3e50
+                    </div>
+                    <p>Headings, text, navigation</p>
+                </div>
+                <div>
+                    <div class="color-swatch light" style="background-color: var(--light);">
+                        Light<br>#ecf0f1
+                    </div>
+                    <p>Backgrounds, light sections</p>
+                </div>
+                <div>
+                    <div class="color-swatch light" style="background-color: var(--gray);">
+                        Gray<br>#95a5a6
+                    </div>
+                    <p>Secondary text, disabled states</p>
+                </div>
+                <div>
+                    <div class="color-swatch" style="background-color: var(--danger);">
+                        Danger Red<br>#e74c3c
+                    </div>
+                    <p>Errors, warnings, cart counter</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Typography Section -->
+        <section class="section">
+            <h2>Typography</h2>
+            <p><strong>Primary Font:</strong> 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif</p>
+            <p><strong>Base Font Size:</strong> 16px</p>
+            <p><strong>Line Height:</strong> 24px</p>
+            
+            <h3>Heading Styles</h3>
+            <div class="typography-example">
+                <h1 style="margin-top: 0;">Heading 1 - 40px (hero section)</h1>
+                <h2>Heading 2 - 32px (section titles)</h2>
+                <h3>Heading 3 - 24px (card titles, footer headings)</h3>
+                <h4>Heading 4 - 18px (product names)</h4>
+            </div>
+            
+            <h3>Body Text</h3>
+            <div class="typography-example">
+                <p>This is regular body text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.</p>
+                <p><strong>Strong text:</strong> Used for emphasis and importance.</p>
+                <p><em>Emphasized text:</em> Used for subtle emphasis.</p>
+                <p><a href="#">Hyperlink text</a> - Uses primary color for hover states.</p>
+            </div>
+        </section>
+        
+        <!-- Buttons Section -->
+        <section class="section">
+            <h2>Buttons</h2>
+            
+            <h3>Primary Button</h3>
+            <a href="#" class="btn btn-primary">Primary Button</a>
+            <a href="#" class="btn btn-primary"><i class="fas fa-shopping-cart"></i> With Icon</a>
+            
+            <h3>Outline Button</h3>
+            <a href="#" class="btn btn-outline">Outline Button</a>
+            <a href="#" class="btn btn-outline"><i class="fas fa-info-circle"></i> With Icon</a>
+            
+            <h3>Secondary Button</h3>
+            <a href="#" class="btn btn-secondary">Secondary Button</a>
+            
+            <h3>Disabled State</h3>
+            <a href="#" class="btn btn-primary" style="opacity: 0.5; cursor: not-allowed;">Disabled Button</a>
+        </section>
+        
+        <!-- Navigation Section -->
+        <section class="section">
+            <h2>Navigation</h2>
+            
+            <h3>Navigation Links</h3>
+            <div class="nav-example">
+                <a href="#">Home</a>
+                <a href="#">Products</a>
+                <a href="#">Contact</a>
+                <a href="#">About</a>
+            </div>
+            
+            <h3>Cart Icon</h3>
+            <div style="position: relative; display: inline-block;">
+                <i class="fas fa-shopping-cart" style="font-size: 24px;"></i>
+                <span class="badge badge-danger" style="position: absolute; top: -10px; right: -10px;">3</span>
+            </div>
+        </section>
+        
+        <!-- Cards Section -->
+        <section class="section">
+            <h2>Card Components</h2>
+            
+            <h3>Product Card</h3>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-img">
+                        <i class="fas fa-apple-alt" style="font-size: 48px; color: var(--primary);"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="rating">★★★★☆</div>
+                        <h4>Organic Apples</h4>
+                        <p>Fresh organic apples from local farms</p>
+                        <div style="font-weight: bold; color: var(--primary);">$4.99</div>
+                        <a href="#" class="btn btn-primary" style="margin-top: 16px; display: inline-block;">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Category Card</h3>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-img">
+                        <i class="fas fa-carrot" style="font-size: 48px; color: var(--primary);"></i>
+                    </div>
+                    <div class="card-body" style="text-align: center;">
+                        <h4>Organic Vegetables</h4>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Special Offer Card</h3>
+            <div class="grid">
+                <div class="card">
+                    <div style="position: relative;">
+                        <div class="card-img">
+                            <i class="fas fa-gift" style="font-size: 48px; color: var(--danger);"></i>
+                        </div>
+                        <span class="badge badge-danger" style="position: absolute; top: 10px; right: 10px;">30% OFF</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="rating">★★★★★</div>
+                        <h4>Organic Fruit Basket</h4>
+                        <p>Assorted seasonal organic fruits</p>
+                        <div>
+                            <span style="text-decoration: line-through; color: var(--gray);">$29.99</span>
+                            <span style="font-weight: bold; color: var(--primary);"> $19.99</span>
+                        </div>
+                        <a href="#" class="btn btn-primary" style="margin-top: 16px; display: inline-block;">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- App Download Banner -->
+        <section class="section">
+            <h2>App Download Banner</h2>
+            <div style="background: var(--dark); color: white; padding: 32px; border-radius: 8px; text-align: center;">
+                <h3 style="color: white;">Get the Fresh Fields app</h3>
+                <p style="margin-bottom: 24px; opacity: 0.9;">Order groceries even faster and get exclusive app-only deals</p>
+                <div style="display: flex; gap: 16px; justify-content: center;">
+                    <a href="#" style="display: flex; align-items: center; background: black; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">
+                        <i class="fab fa-apple" style="font-size: 24px; margin-right: 12px;"></i>
+                        <div>
+                            <div style="font-size: 11px;">Download on the</div>
+                            <div>App Store</div>
+                        </div>
+                    </a>
+                    <a href="#" style="display: flex; align-items: center; background: black; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">
+                        <i class="fab fa-google-play" style="font-size: 24px; margin-right: 12px;"></i>
+                        <div>
+                            <div style="font-size: 11px;">Get it on</div>
+                            <div>Google Play</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer Section -->
+        <section class="section">
+            <h2>Footer</h2>
+            <div style="background: var(--dark); color: white; padding: 32px; border-radius: 8px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; margin-bottom: 32px;">
+                    <div>
+                        <h3 style="color: var(--primary); margin-bottom: 16px;">Fresh Fields</h3>
+                        <p style="color: #bdc3c7;">We're committed to bringing you the freshest, highest quality groceries at affordable prices.</p>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--primary); margin-bottom: 16px;">Quick Links</h3>
+                        <a href="#" style="color: #bdc3c7; display: block; margin-bottom: 8px;">Home</a>
+                        <a href="#" style="color: #bdc3c7; display: block; margin-bottom: 8px;">Products</a>
+                        <a href="#" style="color: #bdc3c7; display: block; margin-bottom: 8px;">Contact</a>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--primary); margin-bottom: 16px;">Categories</h3>
+                        <a href="#" style="color: #bdc3c7; display: block; margin-bottom: 8px;">Organic Fruits</a>
+                        <a href="#" style="color: #bdc3c7; display: block; margin-bottom: 8px;">Organic Vegetables</a>
+                        <a href="#" style="color: #bdc3c7; display: block; margin-bottom: 8px;">Fresh Meats</a>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--primary); margin-bottom: 16px;">Contact Info</h3>
+                        <p style="color: #bdc3c7; margin-bottom: 8px;"><i class="fas fa-envelope"></i> info@freshfields.com</p>
+                        <p style="color: #bdc3c7; margin-bottom: 8px;"><i class="fas fa-phone"></i> (437) 871-1007</p>
+                    </div>
+                </div>
+                <div style="text-align: center; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); color: #bdc3c7;">
+                    &copy; 2024 Fresh Fields. All rights reserved.
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

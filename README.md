@@ -1,2 +1,2 @@
-# TheProject
-Fresh Fields
+# GroupProject
+Capstone - Web Site Design
